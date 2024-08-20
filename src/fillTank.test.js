@@ -123,4 +123,50 @@ describe('fillTank', () => {
     expect(TestCustomer.money)
       .toEqual(74.95);
   });
+
+  it('function should not fill negative amount of fuel', () => {
+    TestCustomer.money = 100;
+    TestCustomer.vehicle.fuelRemains = 90;
+
+    fillTank(TestCustomer, 1 , -10);
+
+    expect(TestCustomer.vehicle.fuelRemains)
+      .toEqual(90);
+  });
+
+  it('function should not procceed with negative value', () => {
+    TestCustomer.money = 100;
+    TestCustomer.vehicle.fuelRemains = 90;
+
+    fillTank(TestCustomer, -1 , 10);
+
+    expect(TestCustomer.vehicle.fuelRemains)
+      .toEqual(90);
+  });
+
+  it('function should procceed with value of 0', () => {
+    TestCustomer.money = 100;
+    TestCustomer.vehicle.fuelRemains = 90;
+
+    fillTank(TestCustomer, 0 , 10);
+
+    expect(TestCustomer.vehicle.fuelRemains)
+      .toEqual(100);
+
+    expect(TestCustomer.money)
+      .toEqual(100);
+  });
+
+  it('function should not procceed when tank is full', () => {
+    TestCustomer.money = 100;
+    TestCustomer.vehicle.fuelRemains = 100;
+
+    fillTank(TestCustomer, 1);
+
+    expect(TestCustomer.vehicle.fuelRemains)
+      .toEqual(100);
+
+    expect(TestCustomer.money)
+      .toEqual(100);
+  });
 });
